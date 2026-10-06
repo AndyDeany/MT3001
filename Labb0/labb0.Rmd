@@ -1,0 +1,114 @@
+---
+title: "Labb 0"
+author: "Andrew Dean"
+date: "2026-09-02"
+output:
+  pdf_document: default
+  html_document:
+    theme: darkly
+    highlight: zenburn
+    css: ../styles.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Uppgift 1
+
+```{r}
+x <- pi + 1
+```
+Värdet av $\pi + 1$ är `r round(x, 3)` (avrundat till 3 decimaler).
+
+
+## Uppgift 2
+
+```{r}
+beräkna_cylinder_ytarea <- function(radie, höjd) {
+  2 * pi * radie * (höjd + radie)
+}
+```
+En cylinder med höjd 7 m och radie 3 m har ytarean `r round(beräkna_cylinder_ytarea(3, 7), 2)` m².
+
+En cylinder med höjd 8 m och radie 29 m har ytarean `r round(beräkna_cylinder_ytarea(29, 8), 2)` m².
+
+\newpage
+
+## Uppgift 3
+
+```{r, fig.cap="Cylinders ytarea som en function av radien."}
+radier <- seq(from = 0.1, to = 4, length.out = 400)
+höjd = 1
+ytareor <- beräkna_cylinder_ytarea(radier, höjd)
+
+plot(radier, ytareor,
+     type = "l",
+     main = "Ytarea av en cylinder beroende på radien",
+     ylab = "Ytarea",
+     xlab = "Radie")
+
+```
+
+\newpage
+
+## Uppgift 4
+```{r}
+y <- c(1, 2, 3, 4, 5)
+
+medelv1 <- function(x) {
+  längd <- length(x)
+  if (längd == 0) {
+    return(0)
+  }
+  sum(x)/längd
+}
+
+mean(y)
+medelv1(y)
+```
+
+```{r}
+medelv2 <- function(x) {
+  längd <- length(x)
+  if (längd == 0) {
+    return(0)
+  }
+  
+  summa <- 0
+  for (e in x) {
+    summa <- summa + e
+  }
+  
+  summa/längd
+}
+
+mean(y)
+medelv2(y)
+```
+
+\newpage
+
+## Uppgift 5
+
+```{r}
+set.seed(12345)
+
+år <- 0:19
+bnp_capita <- 10 + 0.3 * år + rnorm(20)
+```
+
+
+```{r, fig.cap="BNP per capita under åren."}
+plot(år, bnp_capita,
+     xlab = "År",
+     ylab = "BNP per capita")
+abline(10, 0.3, col = "red")
+```
+
+
+
+
+
+

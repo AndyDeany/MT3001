@@ -1,0 +1,124 @@
+---
+title: "Lösningsförslag till Laboration 0"
+subtitle: Sannolikhetsteori I
+author: "Emil Erikson och Leo Levenius^[Tidigare version av Benjamin Kjellson.]"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document:
+    fig_caption: yes
+---
+\renewcommand{\figurename}{Figur}
+\renewcommand{\tablename}{Tabell}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Följande är __förslag__ på lösningar till Laboration 0.
+Det vill säga, de kunde utförts på annat sätt och fortfarande ha varit korrekta.
+
+
+# Uppgift 1
+
+```{r}
+x <- pi + 1
+```
+Värdet av $\pi + 1$ är ca `r round(x, 3)`.
+
+# Uppgift 2
+```{r}
+cylinder_area <- function(r, h) {
+  2 * pi * r * h + 2 * pi * r^2
+}
+```
+
+Arean för en cylinder som har höjden 5 meter och radie 1 meter är 
+ungefär `r round(cylinder_area(1, 5), 1)` kvadratmeter.
+
+# Uppgift 3
+```{r, fig.cap="En cylinders area som funktion av radien, för fix höjd.", out.width="60%", fig.align="center"}
+radier <- seq(from = 0.1, to = 4, length.out = 100) 
+areor <- cylinder_area(radier, 1)
+plot(radier, areor, 
+     type = "l",
+     main = "",
+     ylab = "Area",
+     xlab = "Radie")
+```
+
+\newpage
+
+
+# Uppgift 4
+
+# (a)
+```{r}
+medelv1 <- function(x) {
+  sum(x) / length(x)
+}
+
+medelv1(1:10)
+mean(1:10)
+```
+
+# (b)
+```{r}
+medelv2 <- function(x) {
+  mu <- 0
+  n <- length(x)
+  for (i in 1:length(x)) {
+    mu <- mu + x[i] / n
+  }
+  mu
+}
+
+medelv2(1:10)
+mean(1:10)
+```
+
+
+# Uppgift 5
+Följande var givet:
+```{r}
+set.seed(12345)
+
+år <- 0:19
+bnp_capita <- 10 + 0.3 * år + rnorm(20)
+```
+
+## (a)
+
+```{r, fig.cap="BNP per capita över tid för ett påhittat land.", out.width="60%", fig.align="center"}
+plot(år, bnp_capita, 
+     main = "",
+     ylab = "BNP/capita",
+     xlab = "År")
+abline(a = 10, b = 0.3, col = "grey")
+```
+
+
+## (b)
+Efter vi har ändrat i `set.seed` måste vi också definiera om variablerna
+(åtminstone `bnp_capita`, som använder sig av slump-funktionen `rnorm`):
+
+```{r, fig.cap="BNP per capita över tid för ett påhittat land.", out.width="60%", fig.align="center"}
+set.seed(42069)
+
+år <- 0:19
+bnp_capita <- 10 + 0.3 * år + rnorm(20)
+plot(år, bnp_capita, 
+     main = "",
+     ylab = "BNP/capita",
+     xlab = "År")
+abline(a = 10, b = 0.3, col = "grey")
+```
+
+\newpage
+
+__Vad är annorlunda mellan de två plottarna?__ Jo, prickarna ligger på andra
+ställen. Detta eftersom vi ändrade värdet i `set.seed`. Använder vi oss inte
+av `set.seed` alls så får vi annorlunda plottar varje gång vi kör koden. Detta
+kan vara en nackdel då ni vill beskriva en sådan plot.
+
+---

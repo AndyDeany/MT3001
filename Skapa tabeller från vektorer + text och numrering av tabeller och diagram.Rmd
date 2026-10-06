@@ -1,0 +1,48 @@
+---
+title: "Laboration X"
+author: "Förnamn Efternamn"
+date: "2024-06-11"
+output: 
+  html_document:
+    fig_caption: yes
+---
+
+VIKTIGT: Här är det tänkt att ni ska läsa `.Rmd`-filen för att se hur ni ska 
+göra, och HTML-filen (som ni får genom att trycka på `Knit HTML` i RStudio)
+för att se hur det kommer att se ut i rapporten.
+
+Här visas hur en vektor `p` som utgör en diskret sannolikhetsfördelning på
+heltalen $0, 1, \ldots, 4$ kan läggas in någorlunda snyggt i en tabell i ett
+R Markdown-dokument, samt ges en numrering och en beskrivande text.
+Hint: vissa av er rekommenderas att göra detta för Keno 11 (laboration 1).
+
+```{r}
+# För exemplets skull hittar jag på en vektor p
+p <- 1:5 / sum(1:5)
+names(p) <- 0:4  # Antar i detta fall att p har namn på sina element
+```
+
+
+Sedan kan jag skapa tabellen på följande vis:
+```{r, results='asis'}
+df <- data.frame(k = 0:4, p = p)
+names(df) <- c("Antal nånting", "Sannolikhet")
+rownames(df) <- NULL  # tar bort radnamn för säkerhets skull
+
+knitr::kable(df, 
+             caption = "Beskrivande text till tabellen.",
+             digits = 3)
+```
+
+
+Ett diagram kan ges en beskrivande text genom
+```{r, fig.cap='Ett spridningsdiagram.'}
+barplot(p, main = "Lämplig rubrik", xlab = "Antal nånting", ylab = "Sannolikhet")
+```
+
+Glöm inte att referera till tabeller och figurer i texten ni skriver.
+Dvs, ni kanske skriver något i stil med "Som vi ser i Diagram 1 så..."
+eller "Som vi ser i Tabell 1 så...".
+
+
+**NOTERA**: Skapa **aldrig** egen numrering. När ni kör `Knit to PDF` kommer numreringen att dyka upp automatiskt, även om den inte syns när ni kör `Knit to HTML`.

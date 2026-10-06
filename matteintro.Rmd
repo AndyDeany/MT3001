@@ -1,0 +1,57 @@
+---
+title: "Matematiska symboler"
+author: "Benjamin Kjellson"
+date: "2016--01--28"
+output: html_document
+---
+
+Det här dokumentet visar några användbara LaTeX-kommandon som kan vara användbara
+i kursens labbrapporter. Läs detta R Markdown-dokument för att se vad dessa 
+kommandon är, och kompilera denna fil till ett HTML-dokument (tryck `Knit HTML`
+i RStudio) för att se hur symbolerna kommer att se ut i rapporten.
+
+# Binomialkoefficienter
+För att göra binomialkoefficienter finns det ett par kommandon. Det ena
+är 
+$$
+{n \choose k}
+$$
+och det andra är 
+$$
+\binom{n}{k}
+$$
+Vill man använda dem mitt i en mening skriver man som bekant t.ex. ${n \choose k}$
+istället. 
+
+På liknande sätt kan man skriva
+$$
+{n \choose k_1, k_2} 
+$$
+eller
+$$
+\binom{n}{k_1, k_2}
+$$
+
+# Mängder
+En mängd kan skrivas på detta vis:
+$$
+\{1, 2, \ldots, n\}
+$$
+dvs med ett backslash före måsvingen (klammerparentesen).
+
+# Grekiska bokstäver
+Dessa skrivs helt enkelt med ett backslash och det engenska namnet på symbolen,
+t.ex. $\alpha$, $\beta$, $\gamma$, osv.
+
+# Vanlig matematik
+Ett bråk kan skrivas som $(a^{10} + \delta_0) / (1 + b^x)$, vilket inte kräver så mycket 
+vertikalt utrymme mitt i en mening, men har man formeln på sin egen rad, som nedan, 
+så passar det bättre med
+$$
+\frac{a^{10} + \delta_0}{1 + b^x}
+$$
+Notera här hur potenser används; notera särskilt klammerparenteserna efter ^ då
+potensen består av mer än 1 bokstav/siffra.
+
+# Mer matematiska symboler och knep
+Kan hittas här: https://www.artofproblemsolving.com/wiki/index.php/LaTeX:Symbols

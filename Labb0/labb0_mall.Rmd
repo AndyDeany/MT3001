@@ -1,0 +1,68 @@
+---
+title: "Laboration 0"
+author: "Förnamn Efternamn"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document:
+    fig_caption: yes
+---
+\renewcommand{\figurename}{Figur} 
+\renewcommand{\tablename}{Tabell}
+
+# Sammanfattning
+I detta inledande stycke ska ni förklara vad laborationen går ut på och vad ni kom fram till, utan att gå in på detaljer.
+
+# Uppgift 1
+Text. 
+
+# Uppgift 2
+Text. 
+
+```{r}
+# Ni skriver er kod i sådana här "chunks". 
+# Skapa nya genom att trycka ctrl + alt + I.
+
+```
+
+# Uppgift 3
+Text. 
+
+```{r, fig.cap="Här skriver ni en lämplig figurrubrik."}
+# Här skriver ni koden för figuren.
+
+```
+
+# Uppgift 4
+Text. 
+
+```{r}
+# Ni skriver er kod i sådana här "chunks". 
+# Skapa nya genom att trycka ctrl + alt + I.
+
+```
+
+## Uppgift 4.a
+Ännu mer text.
+
+## Uppgift 4.b
+Ännu mer text.
+
+# Uppgift 5
+Text. 
+
+```{r}
+# Ni skriver er kod i sådana här "chunks". 
+# Skapa nya genom att trycka ctrl + alt + I.
+
+```
+
+## Uppgift 5.a
+Ännu mer text.
+
+## Uppgift 5.b
+Ännu mer text.
+
+ 
+
+
