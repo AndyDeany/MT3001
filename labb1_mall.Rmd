@@ -1,0 +1,57 @@
+---
+title: "Laboration 1"
+author: "Förnamn Efternamn"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    fig_caption: yes
+  pdf_document: default
+---
+\renewcommand{\figurename}{Figur} 
+\renewcommand{\tablename}{Tabell}
+
+# Sammanfattning
+I detta inledande stycke ska ni förklara vad laborationen går ut på och vad ni kom fram till, utan att gå in på detaljer.
+
+# Uppgift 1
+Text.
+
+
+## Uppgift 1.1
+Mer text.
+
+## Uppgift 1.2
+Ännu mer text.
+
+```{r}
+N <- 70
+K <- 11 # Keno 11
+n <- 20
+p <- rep(0, K + 1) # vektor av 11+1=12 nollor
+for (k in 0:K) {
+  p[k+1] <- choose(K, k)*choose(N-K,n-k)/choose(N,n) # p[k+1] är sannolikheten att få k rätt i Keno 11 
+}
+df <- data.frame(k = 0:K, p = p)
+names(df) <- c("Antal rätt", "Sannolikhet")
+knitr::kable(df, digits = 3, caption = "Tabell över sannolikheterna att få olika antal rätt i Keno 11")
+
+sum(p)
+```
+
+## Uppgift 1.3
+Ännu mer text.
+
+# Uppgift 2 
+I Diagram 1 ser vi att k=3 är det mest sannolika utfallet i Keno 11. Övriga utfall som är nära 3 är också ganska sannolika, men de utfall som ligger längre bort från 3 är väldigt osannolika. Särskilt väsentligt är att det är väldigt sannolikt att man får mindre än 5 rätt, dvs. att man vinner ingenting, och att det är alltså ovanligt att vinna. Det kan ses genom att titta på den kumulativa arean av diagrammet upp till och med k=4.
+
+# Uppgift 3
+
+```{r, fig.cap="Diagram 1: Stapeldiagram"}
+# Här skriver ni koden för figuren.
+names(p) <- 0:K
+barplot(p, xlab = "Antal rätt", ylab = "Sannolikhet")
+
+vinstsannolikhet <- sum(p[6:(K+1)])
+paste0("Vinstsannolikheten enligt Svenska Spel är ", round(1 / 6.2, 3))
+paste0("Vår vinssannolikhet är ", round(vinstsannolikhet, 3))
+```
