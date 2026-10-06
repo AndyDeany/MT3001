@@ -3,11 +3,11 @@ title: "Labb 0"
 author: "Andrew Dean"
 date: "2026-09-02"
 output:
-  pdf_document: default
   html_document:
     theme: darkly
     highlight: zenburn
     css: ../styles.css
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
