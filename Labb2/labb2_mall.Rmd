@@ -166,7 +166,7 @@ andel_hist(slumptal, attributes$E_Y, attributes$D_Y)
 
 2. För större $n$, som $n=1000$ (se figur 4), ser andelshistogrammet väldigt mycket
    "plattare" ut. Ännu större värden på $n$ ger en ännu "plattare" fördelning.
-   Det här är förväntat eftersom standardavvikelse $\sigma \propto \frac{1}{\sqrt{n}}$
+   Det här är förväntat eftersom standardavvikelse $\sigma \propto \frac{1}{\sqrt{n}}$.
 
 3. Vi förväntar oss att andelen i var och en av de 10 klasserna ska vara $1/10 = 0.1$. 
 
