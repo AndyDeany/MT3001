@@ -68,7 +68,7 @@ $\mathbb{E}[X_1] = np = n \cdot \frac{1}{k} = \frac{n}{k}$.
 
 $\operatorname{Var}(X_1) = np(1-p) = \frac{n}{k}(1 - \frac{1}{k})$.
 
-$\mathbb{E}[Y_1] = \mathbb{E}[\frac{X_1}{n}] = \frac{1}{n}\mathbb{E}[\frac{X_1}] = \frac{1}{n} \cdot \frac{n}{k} = \frac{1}{k}$.
+$\mathbb{E}[Y_1] = \mathbb{E}[\frac{X_1}{n}] = \frac{1}{n}\mathbb{E}[X_1] = \frac{1}{n} \cdot \frac{n}{k} = \frac{1}{k}$.
 
 $\operatorname{Var}(Y_1) = \operatorname{Var}(X_1/n) = \frac{1}{n^2} \operatorname{Var}(X_1)
 = \frac{1}{n^2} \cdot \frac{n}{k}(1 - \frac{1}{k}) = \frac{1}{nk}(1 - \frac{1}{k})$.
@@ -76,7 +76,6 @@ $\operatorname{Var}(Y_1) = \operatorname{Var}(X_1/n) = \frac{1}{n^2} \operatorna
 $\operatorname{D}(Y_1) = \sqrt{Var(Y_1)} = \sqrt{\frac{1}{nk}(1 - \frac{1}{k})}$.
 
 ## Kodrelaterade uppgifter
-Ännu mer text.
 ```{r}
 set.seed(19981207)
 
@@ -100,7 +99,7 @@ calculate_attributes <- function(n) {
 antal_hist <- function(x, E_X, D_X) {
   hist(
     x,
-    breaks = seq(from = 0, to = 1, length.out = K + 1),    # Skapar 10 delintervall
+    breaks = seq(from = 0, to = max(1, max(x)), length.out = K + 1),    # Skapar 10 delintervall
     main = "Histogram",
     ylab = "Antal",
     xlab = "Värde",
@@ -113,7 +112,7 @@ antal_hist <- function(x, E_X, D_X) {
 
 
 andel_hist <- function(x, E_Y, D_Y) {
-  p <- hist(x, breaks = seq(from = 0, to = 1, length.out = K + 1), plot = FALSE)
+  p <- hist(x, breaks = seq(from = 0, to = max(1, max(x)), length.out = K + 1), plot = FALSE)
   p$counts <- p$counts / sum(p$counts)    # Konvertera antal till andelar
   plot(p,
        main = "Andelshistogram",
@@ -129,7 +128,7 @@ andel_hist <- function(x, E_Y, D_Y) {
 
 ```
 
-```{r, fig.cap="Figur 1"}
+```{r, fig.cap="Figur 1: Antalet observationer per intervall (n=100)"}
 n <- 100
 
 slumptal <- runif(n)
@@ -138,11 +137,11 @@ attributes = calculate_attributes(n)
 antal_hist(slumptal, attributes$E_X, attributes$D_X)
 ```
 
-```{r, fig.cap="Figur 2"}
+```{r, fig.cap="Figur 2: Andelen observationer per intervall (n=100)"}
 andel_hist(slumptal, attributes$E_Y, attributes$D_Y)
 ```
 
-```{r, fig.cap="Figur 3"}
+```{r, fig.cap="Figur 3: Antalet observationer per intervall (n=1000)"}
 n <- 1000
 
 slumptal <- runif(n)
@@ -151,10 +150,39 @@ attributes = calculate_attributes(n)
 antal_hist(slumptal, attributes$E_X, attributes$D_X)
 ```
 
-```{r, fig.cap="Figur 4"}
+```{r, fig.cap="Figur 4: Andelen observationer per intervall (n=1000)"}
 andel_hist(slumptal, attributes$E_Y, attributes$D_Y)
 ```
 
+1. I figur 2 ser vi andelen slumpmässigt generarade observationer som hamnar i varje delintervall.
+   Det *ser* inte exakt ut som en likformig fördelning (som förväntas vara helt "platt"),
+   särskilt i det första intervallet, men det här är på grund av det lilla urvalet av bara $n=100$ observationer.
+
+   Det är dock väl inom 3 standardavvikelser av det som förväntas av en likformig fördelning
+   med så få observationer (visat av de röda linjer på histogrammet),
+   och därför kan vi inte dra slutsatsen att observationerna inte kom från en sådan fördelning.
+   
+   Se uppgifter 2 och 3 nedan för en djupare teoretisk förklaring.
+
+2. För större $n$, som $n=1000$ (se figur 4), ser andelshistogrammet väldigt mycket
+   "plattare" ut. Ännu större värden på $n$ ger en ännu "plattare" fördelning.
+   Det här är förväntat eftersom standardavvikelse $\sigma \propto \frac{1}{\sqrt{n}}$
+
+3. Vi förväntar oss att andelen i var och en av de 10 klasserna ska vara $1/10 = 0.1$. 
+
+   I figur 2, där $n=100$, 3 standardavvikelser ges av:
+   $3\sigma_{n=100} = 3\sqrt{\frac{1}{nk}(1 - \frac{1}{k})} = 3\sqrt{\frac{1}{100\cdot10}(1 - \frac{1}{10})} = 0.09$.
+   Den största avvikelsen i figur 2 är $Y_1$, där felet är $|0.1-0.05|=0.05$,
+   som är märkbart mindre än $3\sigma = 0.09$.
+
+   I figur 4, där $n=1000$, 3 standardavvikelser ges av:
+   $3\sigma_{n=1000} = 3\sqrt{\frac{1}{nk}(1 - \frac{1}{k})} = 3\sqrt{\frac{1}{1000\cdot10}(1 - \frac{1}{10})} \approx 0.028$.
+   Den största avvikelsen i figur 4 är $Y_7$, där felet är ungefär $|0.1-0.09|=0.01$,
+   som också är betydligt mindre än $3\sigma = 0.028$.
+
+4. Det finns inga delintervall (i fallet $n=100$ eller $n=1000$)
+   där andelen observationer är fler än 3 standardavvikelser från
+   det förväntade värdet. Alltså blir R:s slumptalsgenerator godkänd.
 
 # Uppgift 2
 ```{r}
