@@ -11,7 +11,7 @@
 
 <meta name="author" content="Andrew Dean &amp; Ekaterina Kershinskaia" />
 
-<meta name="date" content="2026-10-08" />
+<meta name="date" content="2026-10-09" />
 
 <title>Laboration 2</title>
 
@@ -443,7 +443,7 @@ display: none;
 
 <h1 class="title toc-ignore">Laboration 2</h1>
 <h4 class="author">Andrew Dean &amp; Ekaterina Kershinskaia</h4>
-<h4 class="date">2026-10-08</h4>
+<h4 class="date">2026-10-09</h4>
 
 </div>
 
@@ -490,8 +490,8 @@ delintervallet ges av en <strong>binomialfördelning</strong> <span class="math 
 genererade slumptal är oberoende och har densamma sannolikhet att hamna
 i <span class="math inline">\(I_1\)</span>. Sannolikheten ges alltså
 av:</p>
-<p><span class="math inline">\(P(X_1 = j) = \binom{n}{j} *
-(\frac{1}{k})^j * (1 - \frac{1}{k})^{n-j}\)</span></p>
+<p><span class="math inline">\(P(X_1 = j) = \binom{n}{j} \cdot
+(\frac{1}{k})^j \cdot (1 - \frac{1}{k})^{n-j}\)</span></p>
 </div>
 <div id="uppgift-1.5" class="section level3">
 <h3>Uppgift 1.5</h3>
@@ -632,19 +632,19 @@ fördelning. Det här är förväntat eftersom standardavvikelse <span class="ma
 <li><p>Vi förväntar oss att andelen i var och en av de 10 klasserna ska
 vara <span class="math inline">\(1/10 = 0.1\)</span>.</p>
 <p>I figur 2, där <span class="math inline">\(n=100\)</span>, 3
-standardavvikelser ges av: <span class="math inline">\(3\sigma_{n=100} =
-3\sqrt{\frac{1}{nk}(1 - \frac{1}{k})} = 3\sqrt{\frac{1}{100\cdot10}(1 -
-\frac{1}{10})} = 0.09\)</span>. Den största avvikelsen i figur 2 är
-<span class="math inline">\(Y_1\)</span>, där felet är <span class="math inline">\(|0.1-0.05|=0.05\)</span>, som är märkbart mindre
+standardavvikelser ges av:</p>
+<p><span class="math inline">\(3\sigma_{n=100} = 3\sqrt{\frac{1}{nk}(1 -
+\frac{1}{k})} = 3\sqrt{\frac{1}{100\cdot10}(1 - \frac{1}{10})} =
+0.09\)</span>.</p>
+<p>Den största avvikelsen i figur 2 är <span class="math inline">\(Y_1\)</span>, där felet är <span class="math inline">\(|0.1-0.05|=0.05\)</span>, som är märkbart mindre
 än <span class="math inline">\(3\sigma = 0.09\)</span>.</p>
 <p>I figur 4, där <span class="math inline">\(n=1000\)</span>, 3
-standardavvikelser ges av: <span class="math inline">\(3\sigma_{n=1000}
-= 3\sqrt{\frac{1}{nk}(1 - \frac{1}{k})} = 3\sqrt{\frac{1}{1000\cdot10}(1
-- \frac{1}{10})} \approx 0.028\)</span>. Den största avvikelsen i figur
-4 är <span class="math inline">\(Y_7\)</span>, där felet är ungefär
-<span class="math inline">\(|0.1-0.09|=0.01\)</span>, som också är
-betydligt mindre än <span class="math inline">\(3\sigma =
-0.028\)</span>.</p></li>
+standardavvikelser ges av:</p>
+<p><span class="math inline">\(3\sigma_{n=1000} = 3\sqrt{\frac{1}{nk}(1
+- \frac{1}{k})} = 3\sqrt{\frac{1}{1000\cdot10}(1 - \frac{1}{10})}
+\approx 0.028\)</span>.</p>
+<p>Den största avvikelsen i figur 4 är <span class="math inline">\(Y_7\)</span>, där felet är ungefär <span class="math inline">\(|0.1-0.09|=0.01\)</span>, som också är betydligt
+mindre än <span class="math inline">\(3\sigma = 0.028\)</span>.</p></li>
 <li><p>Det finns inga delintervall (i fallet <span class="math inline">\(n=100\)</span> eller <span class="math inline">\(n=1000\)</span>) där andelen observationer är fler
 än 3 standardavvikelser från det förväntade värdet. Alltså blir R:s
 slumptalsgenerator godkänd.</p></li>

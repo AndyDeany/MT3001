@@ -3,12 +3,12 @@ title: "Laboration 2"
 author: "Andrew Dean & Ekaterina Kershinskaia"
 date: "`r Sys.Date()`"
 output:
+  pdf_document: default
   html_document:
     fig_caption: yes
     theme: darkly
     highlight: zenburn
     css: ../styles.css
-  pdf_document: default
 ---
 \renewcommand{\figurename}{Figur}
 \renewcommand{\tablename}{Tabell}
@@ -23,7 +23,7 @@ slumptalsgenerator.
 ## Teoretiska uppgifter
 
 ### Upggift 1.1
-Vi delar intervallet $[0, 1]$ i $k$ like stora delintervall.
+Vi delar intervallet $[0, 1]$ i $k$ lika stora delintervall.
 
 Det första intervallet ges alltså av $I_1 = [0, \frac{1}{k}]$.
 
@@ -79,9 +79,7 @@ $\operatorname{D}(Y_1) = \sqrt{Var(Y_1)} = \sqrt{\frac{1}{nk}(1 - \frac{1}{k})}$
 ```{r}
 set.seed(19981207)
 
-
-K = 10
-
+K <- 10
 
 calculate_attributes <- function(n) {
   E_X = n/K
@@ -94,7 +92,6 @@ calculate_attributes <- function(n) {
   
   list(E_X = E_X, D_X = D_X, E_Y = E_Y, D_Y = D_Y)
 }
-
 
 antal_hist <- function(x, E_X, D_X) {
   hist(
@@ -110,14 +107,13 @@ antal_hist <- function(x, E_X, D_X) {
   abline(a = E_X - 3*D_X, b = 0, col = "red")
 }
 
-
-andel_hist <- function(x, E_Y, D_Y) {
+andel_hist <- function(x, E_Y, D_Y, xlab="Värde") {
   p <- hist(x, breaks = seq(from = 0, to = max(1, max(x)), length.out = K + 1), plot = FALSE)
   p$counts <- p$counts / sum(p$counts)    # Konvertera antal till andelar
   plot(p,
        main = "Andelshistogram",
        ylab = "Andel",
-       xlab = "Värde",
+       xlab = xlab,
        ylim = c(0, E_Y + 4*D_Y))
   axis(2)
   abline(a = E_Y, b = 0, col = "grey")
@@ -125,10 +121,9 @@ andel_hist <- function(x, E_Y, D_Y) {
   abline(a = E_Y - 3*D_Y, b = 0, col = "red")
 }
 
-
 ```
 
-```{r, fig.cap="Figur 1: Antalet observationer per intervall (n=100)"}
+```{r, fig.cap="Antalet observationer per intervall (n=100)"}
 n <- 100
 
 slumptal <- runif(n)
@@ -137,11 +132,11 @@ attributes = calculate_attributes(n)
 antal_hist(slumptal, attributes$E_X, attributes$D_X)
 ```
 
-```{r, fig.cap="Figur 2: Andelen observationer per intervall (n=100)"}
+```{r, fig.cap="Andelen observationer per intervall (n=100)"}
 andel_hist(slumptal, attributes$E_Y, attributes$D_Y)
 ```
 
-```{r, fig.cap="Figur 3: Antalet observationer per intervall (n=1000)"}
+```{r, fig.cap="Antalet observationer per intervall (n=1000)"}
 n <- 1000
 
 slumptal <- runif(n)
@@ -150,11 +145,11 @@ attributes = calculate_attributes(n)
 antal_hist(slumptal, attributes$E_X, attributes$D_X)
 ```
 
-```{r, fig.cap="Figur 4: Andelen observationer per intervall (n=1000)"}
+```{r, fig.cap="Andelen observationer per intervall (n=1000)"}
 andel_hist(slumptal, attributes$E_Y, attributes$D_Y)
 ```
 
-1. I figur 2 ser vi andelen slumpmässigt generarade observationer som hamnar i varje delintervall.
+1. I Figur 2 ser vi andelen slumpmässigt generarade observationer som hamnar i varje delintervall.
    Det *ser* inte exakt ut som en likformig fördelning (som förväntas vara helt "platt"),
    särskilt i det första intervallet, men det här är på grund av det lilla urvalet av bara $n=100$ observationer.
 
@@ -164,20 +159,20 @@ andel_hist(slumptal, attributes$E_Y, attributes$D_Y)
    
    Se uppgifter 2 och 3 nedan för en djupare teoretisk förklaring.
 
-2. För större $n$, som $n=1000$ (se figur 4), ser andelshistogrammet väldigt mycket
+2. För större $n$, som $n=1000$ (se Figur 4), ser andelshistogrammet väldigt mycket
    "plattare" ut. Ännu större värden på $n$ ger en ännu "plattare" fördelning.
    Det här är förväntat eftersom standardavvikelse $\sigma \propto \frac{1}{\sqrt{n}}$.
 
 3. Vi förväntar oss att andelen i var och en av de 10 klasserna ska vara $1/10 = 0.1$. 
 
-   I figur 2, där $n=100$, 3 standardavvikelser ges av:
+   I Figur 2, där $n=100$, 3 standardavvikelser ges av:
    $3\sigma_{n=100} = 3\sqrt{\frac{1}{nk}(1 - \frac{1}{k})} = 3\sqrt{\frac{1}{100\cdot10}(1 - \frac{1}{10})} = 0.09$.
-   Den största avvikelsen i figur 2 är $Y_1$, där felet är $|0.1-0.05|=0.05$,
+   Den största avvikelsen i Figur 2 är $Y_1$, där felet är $|0.1-0.05|=0.05$,
    som är märkbart mindre än $3\sigma = 0.09$.
 
-   I figur 4, där $n=1000$, 3 standardavvikelser ges av:
+   I Figur 4, där $n=1000$, 3 standardavvikelser ges av:
    $3\sigma_{n=1000} = 3\sqrt{\frac{1}{nk}(1 - \frac{1}{k})} = 3\sqrt{\frac{1}{1000\cdot10}(1 - \frac{1}{10})} \approx 0.028$.
-   Den största avvikelsen i figur 4 är $Y_7$, där felet är ungefär $|0.1-0.09|=0.01$,
+   Den största avvikelsen i Figur 4 är $Y_7$, där felet är ungefär $|0.1-0.09|=0.01$,
    som också är betydligt mindre än $3\sigma = 0.028$.
 
 4. Det finns inga delintervall (i fallet $n=100$ eller $n=1000$)
@@ -185,79 +180,64 @@ andel_hist(slumptal, attributes$E_Y, attributes$D_Y)
    det förväntade värdet. Alltså blir R:s slumptalsgenerator godkänd.
 
 # Uppgift 2
-```{r}
+I denna uppgift undersöker vi exponential- och normalfördelade slumptal genom simuleringar i R. Histogrammen jämförs med täthetsfunktionen för respektive fördelning, eftersom andelshistogrammet visar hur observationerna fördelar sig över olika intervall. För varje fördelning jämförs resultat från \(n_1=100\) och \(n_2=10\,000\) observationer.
 
+```{r, fig.cap="Andelshistogram för exponentialfördelade slumptal med \\(a = 2\\) för \\(n_{1} = 100\\) respektive \\(n_{2} = 10\\,000\\) observationer."}
+set.seed(19981207)
 
 prop_hist <- function(x, xlab = "Värde") {
   p <- hist(x, plot = FALSE)
-  p$counts <- p$counts / sum(p$counts)    # Konvertera antal till andelar
+  p$counts <- p$counts / sum(p$counts) # Konvertera antal till andelar
   plot(p,
        main = "Andelshistogram",
        ylab = "Andel",
-       xlab = xlab)
+       xlab = xlab,
+       )
   axis(2)
 }
+
 n1 <- 100
-n2 <- 1000000
-a <- 1
+n2 <- 10000
+a <- 2
 
 par(mfrow = c(1,2))
 prop_hist(rexp(n1, rate = a))
 prop_hist(rexp(n2, rate = a))
+```
 
+Först betraktar vi resultatet av simuleringen för exponentialfördelningen med \(a = 2\) (se Fig. 5). De simulerade slumptalen ser ut att följa en exponentialfördelning: histogrammen är högerskeva och har störst andel observationer nära 0, varefter andelen observationer minskar när värdet ökar. Man kan dessutom observera att den förväntade formen blir tydligare när antalet observationer ökar från \(n_1=100\) till \(n_2=10\,000\).
 
-m <- 0
-s <- 1
+```{r, fig.cap="Andelshistogram för normalfördelade slumptal med \\(m = 10\\) och \\(s = 2\\) för \\(n_{1} = 100\\) respektive \\(n_{2} = 10\\,000\\) observationer."}
+m <- 10
+s <- 2
 
 par(mfrow = c(1,2))
 prop_hist(rnorm(n1, mean = m, sd = s))
 prop_hist(rnorm(n2, mean = m, sd = s))
 ```
 
+För normalfördelningen är histogrammen ungefär symmetriska kring väntevärdet \(m=10\). De flesta observationerna ligger nära väntevärdet, och andelen observationer minskar ju längre från \(m\) värdet ligger, vilket ger den karakteristiska klockformen (se Fig. 6). På samma sätt som för exponentialfördelningen blir den karakteristiska formen tydligare när antalet observationer ökar från \(n_1=100\) till \(n_2=10\,000\).
 
 # Uppgift 3
-```{r}
-n <- 100
-k <- 10
 
+I denna uppgift undersöker vi genom simulering om transformationen \(V=1-e^{-2X}\), där \(X\) är exponentialfördelad, ger en likformigt fördelad variabel \(V\).
 
-E_X = n/k
-Var_X = (n/k)*(1 - 1/k)
-D_X = sqrt(Var_X)
+```{r, fig.cap="Andelshistogram för exponentialfördelade slumptal \\(X\\) och den transformerade variabeln \\(V = 1 - e^{-2X}\\), med \\(n = 1000\\) observationer."}
 
-E_Y = E_X/n
-Var_Y = Var_X/(n^2)
-D_Y = sqrt(Var_Y)
+set.seed(19981207) 
+n <- 1000
 
-
-x <- rexp(n, rate = 2)
+x <- rexp(n, rate = 2) 
 v <- 1 - exp(-2 * x)
 
-
-
-
-prop_hist <- function(x, xlab = "Värde") {
-  p <- hist(x, plot = FALSE)
-  p$counts <- p$counts / sum(p$counts)    # Konvertera antal till andelar
-  plot(p,
-       main = "Andelshistogram",
-       ylab = "Andel",
-       xlab = xlab,
-       ylim = c(0, 0.2))
-  axis(2)
-}
-
-print(E_Y)
-print(D_Y)
 # Plotta x och v bredvid varandra
 par(mfrow = c(1, 2))
 prop_hist(x, xlab = "X")
-prop_hist(v, xlab = "V")
 
+attributes <- calculate_attributes(n)
 
-abline(a = E_Y, b = 0, col = "grey")
-abline(a = E_Y + 3 * D_Y, b = 0, col = "red")
-abline(a = E_Y - 3 * D_Y, b = 0, col = "red")
+andel_hist(v, attributes$E_Y, attributes$D_Y, xlab = "V")
 
 ```
 
+Histogrammet för \(X\) visar den karakteristiska högerskevheten hos exponentialfördelningen, medan histogrammet för \(V\) ser ungefär likformigt ut mellan 0 och 1. För \(V\) ligger samtliga observerade andelar inom intervallet \(E(Y)\pm3D(Y)\), vilket ger ytterligare stöd för att \(V\) är likformigt fördelad. Resultatet stämmer därmed överens med det teoretiska resultatet.
