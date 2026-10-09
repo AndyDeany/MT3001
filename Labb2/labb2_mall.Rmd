@@ -25,9 +25,9 @@ slumptalsgenerator.
 ### Upggift 1.1
 Vi delar intervallet $[0, 1]$ i $k$ lika stora delintervall.
 
-Det första intervallet ges alltså av $I_1 = [0, \frac{1}{k}]$.
+Det första delintervallet ges alltså av $I_1 = [0, \frac{1}{k}]$.
 
-Det sista intervallet ges av $I_k = [1 - \frac{1}{k}, 1]$.
+Det sista delintervallet ges av $I_k = [1 - \frac{1}{k}, 1]$.
 
 
 ### Upggift 1.2
@@ -39,7 +39,7 @@ Sannolikheten att ett slumptal generarad från $Likf[0,1]$ hamnar i $I_1$ är $\
 
 Sannolikheten att ett slumptal generarad från $Likf[0,1]$ inte hamnar i $I_1$ är $1 - \frac{1}{k}$.
 
-Sannolikheten att hamna i det första intervallet ges av en **Bernoullifördelning** med parametern $p = \frac{1}{k}$.
+Sannolikheten att hamna i det första delintervallet ges av en **Bernoullifördelning** med parametern $p = \frac{1}{k}$.
 
 
 ### Uppgift 1.4
@@ -48,7 +48,7 @@ i det första delintervallet ges av en **binomialfördelning** $X_1 \sim B(n, \f
 eftersom alla genererade slumptal är oberoende och har densamma sannolikhet att hamna i $I_1$.
 Sannolikheten ges alltså av:
 
-$P(X_1 = j) = \binom{n}{j} * (\frac{1}{k})^j * (1 - \frac{1}{k})^{n-j}$
+$P(X_1 = j) = \binom{n}{j} \cdot (\frac{1}{k})^j \cdot (1 - \frac{1}{k})^{n-j}$
 
 
 ### Uppgift 1.5
@@ -123,7 +123,7 @@ andel_hist <- function(x, E_Y, D_Y, xlab="Värde") {
 
 ```
 
-```{r, fig.cap="Antalet observationer per intervall (n=100)"}
+```{r, fig.cap="Antalet observationer per delintervall (n=100)"}
 n <- 100
 
 slumptal <- runif(n)
@@ -132,11 +132,11 @@ attributes = calculate_attributes(n)
 antal_hist(slumptal, attributes$E_X, attributes$D_X)
 ```
 
-```{r, fig.cap="Andelen observationer per intervall (n=100)"}
+```{r, fig.cap="Andelen observationer per delintervall (n=100)"}
 andel_hist(slumptal, attributes$E_Y, attributes$D_Y)
 ```
 
-```{r, fig.cap="Antalet observationer per intervall (n=1000)"}
+```{r, fig.cap="Antalet observationer per delintervall (n=1000)"}
 n <- 1000
 
 slumptal <- runif(n)
@@ -145,13 +145,13 @@ attributes = calculate_attributes(n)
 antal_hist(slumptal, attributes$E_X, attributes$D_X)
 ```
 
-```{r, fig.cap="Andelen observationer per intervall (n=1000)"}
+```{r, fig.cap="Andelen observationer per delintervall (n=1000)"}
 andel_hist(slumptal, attributes$E_Y, attributes$D_Y)
 ```
 
 1. I Figur 2 ser vi andelen slumpmässigt generarade observationer som hamnar i varje delintervall.
    Det *ser* inte exakt ut som en likformig fördelning (som förväntas vara helt "platt"),
-   särskilt i det första intervallet, men det här är på grund av det lilla urvalet av bara $n=100$ observationer.
+   särskilt i det första delintervallet, men det här är på grund av det lilla urvalet av bara $n=100$ observationer.
 
    Det är dock väl inom 3 standardavvikelser av det som förväntas av en likformig fördelning
    med så få observationer (visat av de röda linjer på histogrammet),
@@ -166,12 +166,17 @@ andel_hist(slumptal, attributes$E_Y, attributes$D_Y)
 3. Vi förväntar oss att andelen i var och en av de 10 klasserna ska vara $1/10 = 0.1$. 
 
    I Figur 2, där $n=100$, 3 standardavvikelser ges av:
+
    $3\sigma_{n=100} = 3\sqrt{\frac{1}{nk}(1 - \frac{1}{k})} = 3\sqrt{\frac{1}{100\cdot10}(1 - \frac{1}{10})} = 0.09$.
+
    Den största avvikelsen i Figur 2 är $Y_1$, där felet är $|0.1-0.05|=0.05$,
    som är märkbart mindre än $3\sigma = 0.09$.
 
+
    I Figur 4, där $n=1000$, 3 standardavvikelser ges av:
+
    $3\sigma_{n=1000} = 3\sqrt{\frac{1}{nk}(1 - \frac{1}{k})} = 3\sqrt{\frac{1}{1000\cdot10}(1 - \frac{1}{10})} \approx 0.028$.
+
    Den största avvikelsen i Figur 4 är $Y_7$, där felet är ungefär $|0.1-0.09|=0.01$,
    som också är betydligt mindre än $3\sigma = 0.028$.
 
@@ -180,7 +185,7 @@ andel_hist(slumptal, attributes$E_Y, attributes$D_Y)
    det förväntade värdet. Alltså blir R:s slumptalsgenerator godkänd.
 
 # Uppgift 2
-I denna uppgift undersöker vi exponential- och normalfördelade slumptal genom simuleringar i R. Histogrammen jämförs med täthetsfunktionen för respektive fördelning, eftersom andelshistogrammet visar hur observationerna fördelar sig över olika intervall. För varje fördelning jämförs resultat från \(n_1=100\) och \(n_2=10\,000\) observationer.
+I denna uppgift undersöker vi exponential- och normalfördelade slumptal genom simuleringar i R. Histogrammet jämförs med täthetsfunktionen för respektive fördelning, eftersom andelshistogrammet visar hur observationerna fördelar sig över de olika delintervall. För varje fördelning jämförs resultat från \(n_1=100\) och \(n_2=10\,000\) observationer.
 
 ```{r, fig.cap="Andelshistogram för exponentialfördelade slumptal med \\(a = 2\\) för \\(n_{1} = 100\\) respektive \\(n_{2} = 10\\,000\\) observationer."}
 set.seed(19981207)
@@ -205,7 +210,7 @@ prop_hist(rexp(n1, rate = a))
 prop_hist(rexp(n2, rate = a))
 ```
 
-Först betraktar vi resultatet av simuleringen för exponentialfördelningen med \(a = 2\) (se Fig. 5). De simulerade slumptalen ser ut att följa en exponentialfördelning: histogrammen är högerskeva och har störst andel observationer nära 0, varefter andelen observationer minskar när värdet ökar. Man kan dessutom observera att den förväntade formen blir tydligare när antalet observationer ökar från \(n_1=100\) till \(n_2=10\,000\).
+Först betraktar vi resultatet av simuleringen för exponentialfördelningen med \(a = 2\) (se Fig. 5). De simulerade slumptalen ser ut att följa en exponentialfördelning: histogrammet är högerskeva och har störst andel observationer nära 0, varefter andelen observationer minskar när värdet ökar. Man kan dessutom observera att den förväntade formen blir tydligare när antalet observationer ökar från \(n_1=100\) till \(n_2=10\,000\).
 
 ```{r, fig.cap="Andelshistogram för normalfördelade slumptal med \\(m = 10\\) och \\(s = 2\\) för \\(n_{1} = 100\\) respektive \\(n_{2} = 10\\,000\\) observationer."}
 m <- 10
@@ -216,7 +221,7 @@ prop_hist(rnorm(n1, mean = m, sd = s))
 prop_hist(rnorm(n2, mean = m, sd = s))
 ```
 
-För normalfördelningen är histogrammen ungefär symmetriska kring väntevärdet \(m=10\). De flesta observationerna ligger nära väntevärdet, och andelen observationer minskar ju längre från \(m\) värdet ligger, vilket ger den karakteristiska klockformen (se Fig. 6). På samma sätt som för exponentialfördelningen blir den karakteristiska formen tydligare när antalet observationer ökar från \(n_1=100\) till \(n_2=10\,000\).
+För normalfördelningen är histogrammet ungefär symmetriska kring väntevärdet \(m=10\). De flesta observationerna ligger nära väntevärdet, och andelen observationer minskar ju längre från \(m\) värdet ligger, vilket ger den karakteristiska klockformen (se Fig. 6). På samma sätt som för exponentialfördelningen blir den karakteristiska formen tydligare när antalet observationer ökar från \(n_1=100\) till \(n_2=10\,000\).
 
 # Uppgift 3
 
