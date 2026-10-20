@@ -1,11 +1,14 @@
 ---
 title: "Laboration 3"
-author: "Förnamn Efternamn"
+author: "Andrew Dean & Ekaterina Kershinskaia"
 date: "`r Sys.Date()`"
 output:
-  pdf_document: default
   html_document:
     fig_caption: yes
+    theme: darkly
+    highlight: zenburn
+    css: ../styles.css
+  pdf_document: default
 ---
 \renewcommand{\figurename}{Figur}
 \renewcommand{\tablename}{Tabell}
@@ -14,7 +17,117 @@ output:
 I detta inledande stycke ska ni förklara vad laborationen går ut på och vad ni kom fram till, utan att gå in på detaljer.
 
 # Uppgift 1
-Text.
+
+```{r}
+m <- 1  # Expected value
+
+plot_numbers <- function(numbers, expected_value) {
+  medel <- cumsum(numbers) / 1:length(numbers)
+  plot(medel,
+    type = "l", # plotta en linje
+    main = "Kumulativt löpande medelvärde",
+    ylab = "Medelvärde",
+    xlab = "Antal observationer")
+  abline(a = expected_value, b = 0, col = "gray60") # Horisontell linje vid y = 1 = väntevärdet
+}
+
+set.seed(19980226)
+
+slumptal <- rexp(300, rate = 1/m)
+
+hist(slumptal,
+  main = "Histogram för exponentialfördelade slumptal",
+  ylab = "Antal",
+  xlab = "Värde")
+
+plot_numbers(slumptal, m)
+
+
+set.seed(19981207) # För att få nya slumptal måste du byta seed från förra simuleringen.
+slumptal2 <- rexp(300, rate = 1/m)
+plot_numbers(slumptal2, m)
+
+
+
+slumptal3 <- rexp(1000, rate = 1/m)
+plot_numbers(slumptal3, m)
+
+
+slumptal4 <- rnorm(1000)
+plot_numbers(slumptal4, 0)
+
+
+slumptal5 <- runif(1000)
+plot_numbers(slumptal5, 0.5)
+ 
+
+
+```
+
+
+
 
 # Uppgift 2
-Mer text. 
+```{r}
+likf <- runif(300)
+
+hist(likf,
+main = "Likformigt fördelade slumptal",
+ylab = "Antal",
+xlab = "Värde")
+
+n <- 30 # antalet rader
+M <- 1000 # antalet kolumner
+likf_matris <- matrix(runif(n * M), nrow = n, ncol = M)
+
+hist(likf_matris[3, ],
+main = "Likformigt fördelade slumptal",
+ylab = "Antal",
+xlab = "Värde")
+
+summa <- colSums(likf_matris)
+# Notera att det finns en liknande funktion för att summera över rader: rowSums
+# Ännu fler liknande funktioner som fungerar på matriser och data.frames
+# kan ni se om ni skriver ?colSums i Console.
+
+mu <- 1/2 # Väntevärdet
+sigma2 <- 1/12 # Variansen
+stand <- (summa - n * mu) / sqrt(n * sigma2) # standardisera observationerna
+hist(stand,
+main = "Standardiserade observationer",
+ylab = "Antal",
+xlab = "Värde")
+```
+
+
+```{r}
+exp <- rexp(300)
+
+hist(likf,
+main = "Exponentialt fördelade slumptal",
+ylab = "Antal",
+xlab = "Värde")
+
+n <- 30 # antalet rader
+M <- 1000 # antalet kolumner
+exp_matris <- matrix(rexp(n * M), nrow = n, ncol = M)
+
+hist(exp_matris[3, ],
+main = "Exponentialt fördelade slumptal",
+ylab = "Antal",
+xlab = "Värde")
+
+summa <- colSums(exp_matris)
+# Notera att det finns en liknande funktion för att summera över rader: rowSums
+# Ännu fler liknande funktioner som fungerar på matriser och data.frames
+# kan ni se om ni skriver ?colSums i Console.
+
+mu <- 1 # Väntevärdet
+sigma2 <- 1 # Variansen
+stand <- (summa - n * mu) / sqrt(n * sigma2) # standardisera observationerna
+hist(stand,
+main = "Standardiserade observationer",
+ylab = "Antal",
+xlab = "Värde")
+```
+
