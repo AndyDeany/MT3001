@@ -3,12 +3,12 @@ title: "Laboration 3"
 author: "Andrew Dean & Ekaterina Kershinskaia"
 date: "`r Sys.Date()`"
 output:
+  pdf_document: default
   html_document:
     fig_caption: yes
     theme: darkly
     highlight: zenburn
     css: ../styles.css
-  pdf_document: default
 ---
 \renewcommand{\figurename}{Figur}
 \renewcommand{\tablename}{Tabell}
@@ -82,23 +82,25 @@ plot_medel(medel5, 0)
 
 Vi ser att medelvärdet konvergerar mot det teoretiska värtevärdet när antalet observationer ökar, för både exponentialfördelningen och standardnormalfördelningen. Resultaten stämmer därmed överens med Stora talens lag.
 
+
+\newpage
+
+
 # Uppgift 2
-```{r}
-likf <- runif(300)
 
-hist(likf,
-main = "Likformigt fördelade slumptal",
-ylab = "Antal",
-xlab = "Värde")
+Centrala gränsvärdessatsen säger att styckprovmedelvärdet av $n$ stycken oberoende
+likfördelade observationer tenderar mot en normalfördelning då $n \to \infty$.
 
+Mer specifikt:
+
+$\mathbb{P} \left(\frac{\sqrt{n}}{\sigma}(\bar{X}_n - \mu) \leq z \right) \to \Phi (z) \quad$ då $n \to \infty$
+
+där $\Phi (z) = \mathbb{P}(Z \leq z), \quad Z \sim \mathcal{N}(0, 1)$ är den standard normalfördelningen.
+
+```{r, fig.cap="Standardiserade summor av n=30 observationer från likformig fördelning."}
 n <- 30 # antalet rader
 M <- 1000 # antalet kolumner
 likf_matris <- matrix(runif(n * M), nrow = n, ncol = M)
-
-hist(likf_matris[3, ],
-main = "Likformigt fördelade slumptal",
-ylab = "Antal",
-xlab = "Värde")
 
 summa <- colSums(likf_matris)
 # Notera att det finns en liknande funktion för att summera över rader: rowSums
@@ -109,28 +111,36 @@ mu <- 1/2 # Väntevärdet
 sigma2 <- 1/12 # Variansen
 stand <- (summa - n * mu) / sqrt(n * sigma2) # standardisera observationerna
 hist(stand,
-main = "Standardiserade observationer",
-ylab = "Antal",
-xlab = "Värde")
+    main = "Standardiserade observationer",
+    ylab = "Antal",
+    xlab = "Värde")
+```
+
+```{r, fig.cap="Standardiserade summor av n=300 observationer från likformig fördelning."}
+n <- 300 # antalet rader
+M <- 1000 # antalet kolumner
+likf_matris <- matrix(runif(n * M), nrow = n, ncol = M)
+
+summa <- colSums(likf_matris)
+# Notera att det finns en liknande funktion för att summera över rader: rowSums
+# Ännu fler liknande funktioner som fungerar på matriser och data.frames
+# kan ni se om ni skriver ?colSums i Console.
+
+mu <- 1/2 # Väntevärdet
+sigma2 <- 1/12 # Variansen
+stand <- (summa - n * mu) / sqrt(n * sigma2) # standardisera observationerna
+hist(stand,
+    main = "Standardiserade observationer",
+    ylab = "Antal",
+    xlab = "Värde")
 ```
 
 
-```{r}
-exp <- rexp(300)
 
-hist(likf,
-main = "Exponentialt fördelade slumptal",
-ylab = "Antal",
-xlab = "Värde")
-
+```{r, fig.cap="Standardiserade summor av n=30 observationer från exponential fördelning."}
 n <- 30 # antalet rader
 M <- 1000 # antalet kolumner
 exp_matris <- matrix(rexp(n * M), nrow = n, ncol = M)
-
-hist(exp_matris[3, ],
-main = "Exponentialt fördelade slumptal",
-ylab = "Antal",
-xlab = "Värde")
 
 summa <- colSums(exp_matris)
 # Notera att det finns en liknande funktion för att summera över rader: rowSums
@@ -141,8 +151,40 @@ mu <- 1 # Väntevärdet
 sigma2 <- 1 # Variansen
 stand <- (summa - n * mu) / sqrt(n * sigma2) # standardisera observationerna
 hist(stand,
-main = "Standardiserade observationer",
-ylab = "Antal",
-xlab = "Värde")
+    main = "Standardiserade observationer",
+    ylab = "Antal",
+    xlab = "Värde")
 ```
+
+```{r, fig.cap="Standardiserade summor av n=300 observationer från exponential fördelning."}
+n <- 300 # antalet rader
+M <- 1000 # antalet kolumner
+exp_matris <- matrix(rexp(n * M), nrow = n, ncol = M)
+
+summa <- colSums(exp_matris)
+# Notera att det finns en liknande funktion för att summera över rader: rowSums
+# Ännu fler liknande funktioner som fungerar på matriser och data.frames
+# kan ni se om ni skriver ?colSums i Console.
+
+mu <- 1 # Väntevärdet
+sigma2 <- 1 # Variansen
+stand <- (summa - n * mu) / sqrt(n * sigma2) # standardisera observationerna
+hist(stand,
+    main = "Standardiserade observationer",
+    ylab = "Antal",
+    xlab = "Värde")
+```
+
+1. De standardiserade summora av likformiga slumptal (Figur 6/7) verkar ha en
+fördelning som liknar en normal fördelning med den klassiska "klocka" formen.
+
+2. De standardiserade summora av exponentiala fördelade slumptal (Figur 8/9) verkar
+också ha en fördelning som liknar normal fördelning men en snarlik form.
+
+3. Större värden på $n$ (Figur 7/9) gör att föredelningarna ser till och med
+mer ut som att vara normal fördelade.
+
+Det här stämmer överens med det centrala gränsvärdessatsen säger om att en
+fördelning av summorna av observationer liknar en normalfördelning,
+särskilt då $n$ blir stort.
 
