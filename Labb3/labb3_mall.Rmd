@@ -97,7 +97,7 @@ $\mathbb{P} \left(\frac{\sqrt{n}}{\sigma}(\bar{X}_n - \mu) \leq z \right) \to \P
 
 där $\Phi (z) = \mathbb{P}(Z \leq z), \quad Z \sim \mathcal{N}(0, 1)$ är den standard normalfördelningen.
 
-```{r, fig.cap="Standardiserade summor av n=30 observationer från likformig fördelning."}
+```{r, fig.cap="Standardiserade summor av $n=30$ observationer från likformig fördelning."}
 n <- 30 # antalet rader
 M <- 1000 # antalet kolumner
 likf_matris <- matrix(runif(n * M), nrow = n, ncol = M)
@@ -116,7 +116,7 @@ hist(stand,
     xlab = "Värde")
 ```
 
-```{r, fig.cap="Standardiserade summor av n=300 observationer från likformig fördelning."}
+```{r, fig.cap="Standardiserade summor av $n=300$ observationer från likformig fördelning."}
 n <- 300 # antalet rader
 M <- 1000 # antalet kolumner
 likf_matris <- matrix(runif(n * M), nrow = n, ncol = M)
@@ -137,7 +137,7 @@ hist(stand,
 
 
 
-```{r, fig.cap="Standardiserade summor av n=30 observationer från exponential fördelning."}
+```{r, fig.cap="Standardiserade summor av $n=30$ observationer från exponential fördelning."}
 n <- 30 # antalet rader
 M <- 1000 # antalet kolumner
 exp_matris <- matrix(rexp(n * M), nrow = n, ncol = M)
@@ -156,7 +156,7 @@ hist(stand,
     xlab = "Värde")
 ```
 
-```{r, fig.cap="Standardiserade summor av n=300 observationer från exponential fördelning."}
+```{r, fig.cap="Standardiserade summor av $n=300$ observationer från exponential fördelning."}
 n <- 300 # antalet rader
 M <- 1000 # antalet kolumner
 exp_matris <- matrix(rexp(n * M), nrow = n, ncol = M)
