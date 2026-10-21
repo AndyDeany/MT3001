@@ -14,58 +14,73 @@ output:
 \renewcommand{\tablename}{Tabell}
 
 # Sammanfattning
-I detta inledande stycke ska ni förklara vad laborationen går ut på och vad ni kom fram till, utan att gå in på detaljer.
+Syftet med laborationen är att använda simuleringar i $R$ för att illustrera två av de viktigaste gränsvärdessatserna
+i sannolikhetsteorin: Stora talens lag och Centrala gränsvärdessatsen.
 
 # Uppgift 1
+Stora talens lag säger att medelvärdet närmar sig det sanna väntevärdet när antalet observationer ökar. För att illustrera detta börjar vi med att skapa ett dataset med \(n=300\) slumptal från en exponentialfördelning med väntevärde \(m=1\), och undersöker hur det kumulativa medelvärdet utvecklas när antalet observationer ökar.
 
-```{r}
-m <- 1  # Expected value
+```{r, fig.cap="Kumulativt medelvärde för 300 slumptal från en exponentialfördelning med väntevärde 1."}
+# Först ger vi ett "frö" (seed) till slumptalsgeneratorn genom funktionen set.seed
+# Detta gör att vi får exakt samma slumptal varje gång vi kör koden.
+set.seed(19980226) 
 
-plot_numbers <- function(numbers, expected_value) {
-  medel <- cumsum(numbers) / 1:length(numbers)
+m <- 1 # väntevärde
+slumptal <- rexp(300, rate = 1/m) # rate = 1 / väntevärde
+
+# lista med kumulativa medelvärden för de första i observationerna
+medel <- cumsum(slumptal) / 1:length(slumptal) 
+
+plot_medel <- function(medel, m) {
   plot(medel,
-    type = "l", # plotta en linje
-    main = "Kumulativt löpande medelvärde",
-    ylab = "Medelvärde",
-    xlab = "Antal observationer")
-  abline(a = expected_value, b = 0, col = "gray60") # Horisontell linje vid y = 1 = väntevärdet
+  type = "l", # plotta en linje
+  main = "Kumulativt löpande medelvärde",
+  ylab = "Medelvärde",
+  xlab = "Antal observationer")
+  abline(a = m, b = 0, col = "gray60") # Horisontell linje vid väntevärdet m
 }
 
-set.seed(19980226)
-
-slumptal <- rexp(300, rate = 1/m)
-
-hist(slumptal,
-  main = "Histogram för exponentialfördelade slumptal",
-  ylab = "Antal",
-  xlab = "Värde")
-
-plot_numbers(slumptal, m)
-
-
-set.seed(19981207) # För att få nya slumptal måste du byta seed från förra simuleringen.
-slumptal2 <- rexp(300, rate = 1/m)
-plot_numbers(slumptal2, m)
-
-
-
-slumptal3 <- rexp(1000, rate = 1/m)
-plot_numbers(slumptal3, m)
-
-
-slumptal4 <- rnorm(1000)
-plot_numbers(slumptal4, 0)
-
-
-slumptal5 <- runif(1000)
-plot_numbers(slumptal5, 0.5)
- 
-
-
+plot_medel(medel, m)
 ```
 
+Vi observerar i figur 1 att det kumulativa medelvärdet varierar mycket i början men verkar närma sig det teoretiska väntevärdet \(m=1\) när antalet observationer ökar. Och samma mönster gäller även när vi använder ett annat slumptalsfrö (se figur 2).
 
+```{r, fig.cap="Kumulativt medelvärde för 300 slumptal från en exponentialfördelning med väntevärde 1, genererade med ett annat slumptalsfrö."}
+set.seed(19981207) # annan frö
+slumptal2 <- rexp(300, rate = 1/m) # samma m
+medel2 <- cumsum(slumptal2) / 1:length(slumptal2)
+plot_medel(medel2, m)
+```
 
+Tendensen syns även bättre när vi ökar antalet observationer till \(n=1000\) (se figur 3).
+
+```{r, fig.cap="Kumulativt medelvärde för 1 000 slumptal från en exponentialfördelning med väntevärde 1."}
+set.seed(19980226) 
+slumptal3 <- rexp(1000, rate = 1/m)
+medel3 <- cumsum(slumptal3) / 1:length(slumptal3)
+plot_medel(medel3, m)
+```
+
+Sedan genererar vi \(n=1000\) slumptal från en exponentialfördelning med ett annat väntevärde \(m_2=2\), och ser att nu närmar sig medelvärdet det nya väntevärdet (se figur 4). 
+
+```{r, fig.cap="Kumulativt medelvärde för 1 000 slumptal från en exponentialfördelning med väntevärde 2."}
+m2 <- 2
+slumptal4 <- rexp(1000, rate = 1/m2)
+medel4 <- cumsum(slumptal4) / 1:length(slumptal4)
+plot_medel(medel4, m2)
+```
+
+Slutligen undersöker vi om samma princip gäller för slumptal från standardnormalfördelningen, vars teoretiska väntevärde är 0.
+
+```{r, fig.cap="Kumulativt medelvärde för 1 000 slumptal från standardnormalfördelningen N(0, 1)."}
+slumptal5 <- rnorm(1000)
+medel5 <- cumsum(slumptal5) / 1:length(slumptal5)
+plot_medel(medel5, 0)
+```
+
+Även för standardnormalfördelningen verkar det kumulativa medelvärdet närma sig det teoretiska väntevärdet (se figur 5). 
+
+Vi ser att medelvärdet konvergerar mot det teoretiska värtevärdet när antalet observationer ökar, för både exponentialfördelningen och standardnormalfördelningen. Resultaten stämmer därmed överens med Stora talens lag.
 
 # Uppgift 2
 ```{r}
