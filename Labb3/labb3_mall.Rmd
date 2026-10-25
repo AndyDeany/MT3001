@@ -108,86 +108,57 @@ och $S_n = \sum_{k=1}^{n}{X_k}, \; \bar{X}_n = \frac{S_n}{n}$.
 Med andra ord blir summan av många oberoende observationer approximativt normalfördelad,
 oavsett hur de enskilda observationer är fördelade.
 
+```{r}
+plot_uniform_sum <- function(n, M) {
+  likf_matris <- matrix(runif(n * M), nrow = n, ncol = M)
+  summa <- colSums(likf_matris)
+
+  mu <- 1/2       # väntevärdet
+  sigma2 <- 1/12  # variansen
+  stand <- (summa - n * mu) / sqrt(n * sigma2) # standardisera observationerna
+  
+  hist(stand,
+      main = sprintf("Standardiserade observationer (likformig, n=%d)", n),
+      ylab = "Antal",
+      xlab = "Värde")
+}
+
+
+plot_exponential_sum <- function(n, M) {
+  exp_matris <- matrix(rexp(n * M), nrow = n, ncol = M)
+  summa <- colSums(exp_matris)
+
+  mu <- 1       # väntevärdet
+  sigma2 <- 1   # variansen
+  stand <- (summa - n * mu) / sqrt(n * sigma2) # standardisera observationerna
+  
+  hist(stand,
+      main = sprintf("Standardiserade observationer (expontential, n=%d)", n),
+      ylab = "Antal",
+      xlab = "Värde")
+}
+```
+
+
 ```{r, fig.cap="Standardiserade summor av $n=3$ observationer från en likformig fördelning."}
 set.seed(19961111)
-n <- 3 # antalet rader
-M <- 1000 # antalet kolumner
-likf_matris <- matrix(runif(n * M), nrow = n, ncol = M)
-
-summa <- colSums(likf_matris)
-# Notera att det finns en liknande funktion för att summera över rader: rowSums
-# Ännu fler liknande funktioner som fungerar på matriser och data.frames
-# kan ni se om ni skriver ?colSums i Console.
-
-mu <- 1/2 # Väntevärdet
-sigma2 <- 1/12 # Variansen
-stand <- (summa - n * mu) / sqrt(n * sigma2) # standardisera observationerna
-hist(stand,
-    main = "Standardiserade observationer (likformig, n=3)",
-    ylab = "Antal",
-    xlab = "Värde")
+plot_uniform_sum(3, 1000)
 ```
 
 ```{r, fig.cap="Standardiserade summor av $n=300$ observationer från en likformig fördelning."}
 set.seed(19990123)
-n <- 300 # antalet rader
-M <- 1000 # antalet kolumner
-likf_matris <- matrix(runif(n * M), nrow = n, ncol = M)
-
-summa <- colSums(likf_matris)
-# Notera att det finns en liknande funktion för att summera över rader: rowSums
-# Ännu fler liknande funktioner som fungerar på matriser och data.frames
-# kan ni se om ni skriver ?colSums i Console.
-
-mu <- 1/2 # Väntevärdet
-sigma2 <- 1/12 # Variansen
-stand <- (summa - n * mu) / sqrt(n * sigma2) # standardisera observationerna
-hist(stand,
-    main = "Standardiserade observationer (likformig, n=300)",
-    ylab = "Antal",
-    xlab = "Värde")
+plot_uniform_sum(300, 1000)
 ```
-
 
 
 ```{r, fig.cap="Standardiserade summor av $n=3$ observationer från en exponentialfördelning."}
 set.seed(20020220)
-n <- 3 # antalet rader
-M <- 1000 # antalet kolumner
-exp_matris <- matrix(rexp(n * M), nrow = n, ncol = M)
-
-summa <- colSums(exp_matris)
-# Notera att det finns en liknande funktion för att summera över rader: rowSums
-# Ännu fler liknande funktioner som fungerar på matriser och data.frames
-# kan ni se om ni skriver ?colSums i Console.
-
-mu <- 1 # Väntevärdet
-sigma2 <- 1 # Variansen
-stand <- (summa - n * mu) / sqrt(n * sigma2) # standardisera observationerna
-hist(stand,
-    main = "Standardiserade observationer (expontential, n=3)",
-    ylab = "Antal",
-    xlab = "Värde")
+plot_exponential_sum(3, 1000)
 ```
 
 ```{r, fig.cap="Standardiserade summor av $n=300$ observationer från en exponentialfördelning."}
 set.seed(20000706)
-n <- 300 # antalet rader
-M <- 1000 # antalet kolumner
-exp_matris <- matrix(rexp(n * M), nrow = n, ncol = M)
-
-summa <- colSums(exp_matris)
-# Notera att det finns en liknande funktion för att summera över rader: rowSums
-# Ännu fler liknande funktioner som fungerar på matriser och data.frames
-# kan ni se om ni skriver ?colSums i Console.
-
-mu <- 1 # Väntevärdet
-sigma2 <- 1 # Variansen
-stand <- (summa - n * mu) / sqrt(n * sigma2) # standardisera observationerna
-hist(stand,
-    main = "Standardiserade observationer (expontential, n=300)",
-    ylab = "Antal",
-    xlab = "Värde")
+plot_exponential_sum(300, 1000)
 ```
 
 Den standardiserade summan av likformiga slumptal med $n=3$ (se figur 6) börjar
