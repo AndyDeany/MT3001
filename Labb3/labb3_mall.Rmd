@@ -109,33 +109,24 @@ Med andra ord blir summan av många oberoende observationer approximativt normal
 oavsett hur de enskilda observationer är fördelade.
 
 ```{r}
-plot_uniform_sum <- function(n, M) {
-  likf_matris <- matrix(runif(n * M), nrow = n, ncol = M)
-  summa <- colSums(likf_matris)
-
-  mu <- 1/2       # väntevärdet
-  sigma2 <- 1/12  # variansen
+plot_sum <- function(n, matrix, mu, sigma2, distribution_name) {
+  summa <- colSums(matrix)
   stand <- (summa - n * mu) / sqrt(n * sigma2) # standardisera observationerna
   
   hist(stand,
-      main = sprintf("Standardiserade observationer (likformig, n=%d)", n),
+      main = sprintf("Standardiserade observationer (%s, n=%d)", distribution_name, n),
       ylab = "Antal",
       xlab = "Värde")
 }
 
+plot_uniform_sum <- function(n, M) {
+  likf_matris <- matrix(runif(n * M), nrow = n, ncol = M)
+  plot_sum(n, likf_matris, 1/2, 1/12, "likformig")
+}
 
 plot_exponential_sum <- function(n, M) {
   exp_matris <- matrix(rexp(n * M), nrow = n, ncol = M)
-  summa <- colSums(exp_matris)
-
-  mu <- 1       # väntevärdet
-  sigma2 <- 1   # variansen
-  stand <- (summa - n * mu) / sqrt(n * sigma2) # standardisera observationerna
-  
-  hist(stand,
-      main = sprintf("Standardiserade observationer (expontential, n=%d)", n),
-      ylab = "Antal",
-      xlab = "Värde")
+  plot_sum(n, exp_matris, 1, 1, "exponential")
 }
 ```
 
