@@ -152,6 +152,8 @@ set.seed(20000706)
 plot_exponential_sum(300, 1000)
 ```
 
+\newpage
+
 Den standardiserade summan av likformiga slumptal med $n=3$ (se figur 6) börjar
 se ut som en normalfördelning, med en synlig "topp",
 men det ser fortfarande ganska "platt" ut i mitten.
